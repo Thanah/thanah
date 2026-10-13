@@ -1,0 +1,60 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/fraunces';
+
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Fraunces Variable', Georgia, serif;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+}
+
+/* Dark is the default look: it matches the black backdrop of the headshot. */
+:root {
+  color-scheme: dark;
+  --bg: #070708;
+  --surface: #111114;
+  --line: #24242a;
+  --ink: #f4f4f5;
+  --muted: #a1a1aa;
+  --accent: #5eead4;
+  --accent-ink: #042f2e;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+    --bg: #fafaf9;
+    --surface: #ffffff;
+    --line: #e4e4e7;
+    --ink: #18181b;
+    --muted: #52525b;
+    --accent: #0f766e;
+    --accent-ink: #f0fdfa;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  @apply bg-bg text-ink font-sans antialiased;
+}
+
+::selection {
+  @apply bg-accent text-accent-ink;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
