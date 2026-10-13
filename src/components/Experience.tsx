@@ -16,29 +16,30 @@ export function Experience() {
             />
             <div>
               <h3 className="font-display text-2xl font-medium">{job.company}</h3>
+              {job.division && <p className="mt-1 text-sm text-ink/80">{job.division}</p>}
               <p className="mt-1 text-sm text-muted">{job.location}</p>
             </div>
-            <div>
-              <ul className="space-y-2">
-                {job.roles.map((role) => (
-                  <li key={role.title} className="flex flex-wrap items-baseline justify-between gap-x-4">
-                    <span className="font-medium">{role.title}</span>
+            <div className="space-y-10">
+              {job.positions.map((position) => (
+                <div key={position.title}>
+                  <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                    <h4 className="font-medium">{position.title}</h4>
                     <span className="font-mono text-xs tabular-nums text-muted">
-                      {role.start} – {role.end}
+                      {position.start} – {position.end}
                     </span>
-                  </li>
-                ))}
-              </ul>
-              <ul className="mt-5 space-y-3 text-muted">
-                {job.highlights.map((point) => (
-                  <li
-                    key={point}
-                    className="relative pl-5 leading-relaxed before:absolute before:left-0 before:top-[0.7em] before:h-px before:w-2.5 before:bg-accent"
-                  >
-                    {point}
-                  </li>
-                ))}
-              </ul>
+                  </div>
+                  <ul className="mt-4 space-y-3 text-muted">
+                    {position.highlights.map((point) => (
+                      <li
+                        key={point}
+                        className="relative pl-5 leading-relaxed before:absolute before:left-0 before:top-[0.7em] before:h-px before:w-2.5 before:bg-accent"
+                      >
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
           </li>
         ))}
