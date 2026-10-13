@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { profile } from '../data/profile'
 
 const nav = [
@@ -8,8 +9,21 @@ const nav = [
 ]
 
 export function Header() {
+  // Transparent over the hero glow; frosted once the page scrolls.
+  const [scrolled, setScrolled] = useState(false)
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 8)
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    return () => window.removeEventListener('scroll', update)
+  }, [])
+
   return (
-    <header className="sticky top-0 z-10 border-b border-line/60 bg-bg/80 backdrop-blur">
+    <header
+      className={`sticky top-0 z-10 border-b transition-colors duration-300 ${
+        scrolled ? 'border-line/60 bg-bg/75 backdrop-blur-md' : 'border-transparent bg-transparent'
+      }`}
+    >
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:rounded focus:bg-accent focus:px-3 focus:py-2 focus:text-accent-ink"

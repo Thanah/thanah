@@ -7,7 +7,7 @@ describe('App', () => {
   it('introduces Thanah with name, role and clearance', () => {
     render(<App />)
     expect(screen.getByRole('heading', { level: 1, name: profile.name })).toBeInTheDocument()
-    expect(screen.getByText(profile.role)).toBeInTheDocument()
+    expect(screen.getAllByText(profile.role).length).toBeGreaterThan(0)
     expect(screen.getByText(profile.clearance)).toBeInTheDocument()
   })
 

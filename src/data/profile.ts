@@ -12,6 +12,9 @@ export const profile = {
     linkedin: 'https://www.linkedin.com/in/thanah-raveendran',
     github: 'https://github.com/Thanah',
   },
+  // The hero cycles through these; the first is what search engines and screen readers get.
+  roles: ['Software Engineer', 'Full-stack developer', 'Test automation engineer', 'Solutions specialist'],
+  currently: 'Currently at Deloitte',
   headline:
     'I build and test enterprise software at Deloitte, and ship full-stack products of my own on the side.',
   about: [
@@ -20,6 +23,13 @@ export const profile = {
     'Outside of work I run Sorne Studio, a photography business, and I built its booking and studio-management platform end to end, from the database to the payment flow.',
   ],
 }
+
+export const stats: { value: number; suffix: string; label: string }[] = [
+  { value: 100, suffix: 'K+', label: 'vehicles and drivers on the platforms I support' },
+  { value: 80, suffix: '%', label: 'gain in QA efficiency from my test automation' },
+  { value: 50, suffix: '%', label: 'reduction in server-related costs' },
+  { value: 3, suffix: '+', label: 'years engineering at Deloitte' },
+]
 
 export type Role = { title: string; start: string; end: string }
 
