@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import App from './App'
 import { profile, projects } from './data/profile'
@@ -37,12 +37,21 @@ describe('App', () => {
     }
   })
 
-  it('shows every project with a working link', () => {
+  it('gives every project a link or screenshots to look at', () => {
     render(<App />)
     for (const project of projects) {
       const card = screen.getByRole('heading', { level: 3, name: project.name }).closest('article')!
-      expect(within(card).getAllByRole('link').length).toBeGreaterThan(0)
+      const ways = within(card).queryAllByRole('link').length + within(card).queryAllByRole('button').length
+      expect(ways, project.name).toBeGreaterThan(0)
     }
+  })
+
+  it('opens a gallery screenshot full size', () => {
+    render(<App />)
+    const project = projects.find((p) => p.gallery)!
+    const shot = project.gallery![0]
+    fireEvent.click(screen.getByRole('button', { name: `View ${shot.caption} screenshot full size` }))
+    expect(screen.getAllByAltText(shot.alt).some((img) => img.getAttribute('src') === shot.src)).toBe(true)
   })
 
   it('never publishes a phone number', () => {

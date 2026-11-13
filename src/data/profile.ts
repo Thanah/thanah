@@ -1,6 +1,13 @@
 // All site copy lives here so content updates never touch the components.
 import sorneImage from '../assets/projects/sorne-studio.webp'
 import keatsImage from '../assets/projects/mapping-keats.webp'
+import blemImage from '../assets/projects/blem.webp'
+import blemHome from '../assets/projects/blem-home.webp'
+import blemHomeThumb from '../assets/projects/blem-home-thumb.webp'
+import blemFitness from '../assets/projects/blem-fitness.webp'
+import blemFitnessThumb from '../assets/projects/blem-fitness-thumb.webp'
+import blemFinance from '../assets/projects/blem-finance.webp'
+import blemFinanceThumb from '../assets/projects/blem-finance-thumb.webp'
 
 export const profile = {
   name: 'Thanah Raveendran',
@@ -92,6 +99,8 @@ export const education = {
   year: '2022',
 }
 
+export type Screenshot = { src: string; thumb: string; alt: string; caption: string }
+
 export type Project = {
   name: string
   kind: string
@@ -101,7 +110,10 @@ export type Project = {
   image: string
   imageAlt: string
   links: { label: string; href: string }[]
+  gallery?: Screenshot[]
   featured?: boolean
+  // Stack the image full width like the featured card, without the badge.
+  wide?: boolean
 }
 
 export const projects: Project[] = [
@@ -121,6 +133,28 @@ export const projects: Project[] = [
     imageAlt: 'Sorne Studio home page with the booking call to action',
     links: [{ label: 'Visit sornestudio.com', href: 'https://sornestudio.com' }],
     featured: true,
+  },
+  {
+    name: 'Blem',
+    kind: 'Personal app · Solo build · 2026',
+    summary:
+      'A private life hub that replaced my Notion setup: tasks and routines, fitness, health, food, finances and career in one installable app, shared with my partner.',
+    highlights: [
+      'Postgres row-level security scopes every row to its owner or a shared space, verified by 32 automated policy checks.',
+      'Daily bank sync reconciles pending, posted and hand-entered transactions so each purchase stays one row, and categories learn from each correction.',
+      'Logins vault encrypted in the browser (PBKDF2 + AES-256-GCM); the server only ever stores ciphertext.',
+      'Installable PWA with push reminders, scheduled cron jobs, and iPhone Shortcuts that sync Apple Health and Apple Pay data.',
+    ],
+    tags: ['Next.js', 'TypeScript', 'Supabase / Postgres', 'Row-level security', 'Web Push', 'Vercel'],
+    image: blemImage,
+    imageAlt: 'Blem on desktop showing the fitness dashboard, with the phone home screen alongside',
+    links: [],
+    gallery: [
+      { src: blemHome, thumb: blemHomeThumb, alt: 'Blem home screen with today’s tasks and routines', caption: 'Home' },
+      { src: blemFitness, thumb: blemFitnessThumb, alt: 'Blem fitness dashboard with workouts and a weight trend chart', caption: 'Fitness' },
+      { src: blemFinance, thumb: blemFinanceThumb, alt: 'Blem finances dashboard with the monthly budget and income versus spending chart', caption: 'Finances' },
+    ],
+    wide: true,
   },
   {
     name: 'Mapping Keats',
