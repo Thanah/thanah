@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type RefObject } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react'
 
 // Every effect here is progressive: without IntersectionObserver, matchMedia
 // or motion permission, the page renders in its final, static state.
@@ -93,22 +93,4 @@ export function useCountUp<T extends HTMLElement>(target: number, durationMs = 1
   }, [target, durationMs])
 
   return { ref, value }
-}
-
-/** Cycles through `items`, returning the current index. Holds on 0 if motion is reduced. */
-export function useRotatingIndex(length: number, intervalMs = 2600) {
-  const [index, setIndex] = useState(0)
-  useEffect(() => {
-    if (length < 2 || prefersReducedMotion()) return
-    const id = window.setInterval(() => setIndex((i) => (i + 1) % length), intervalMs)
-    return () => window.clearInterval(id)
-  }, [length, intervalMs])
-  return index
-}
-
-/** Writes the pointer position into --mx / --my for the card spotlight. */
-export function trackPointer(event: ReactPointerEvent<HTMLElement>) {
-  const rect = event.currentTarget.getBoundingClientRect()
-  event.currentTarget.style.setProperty('--mx', `${event.clientX - rect.left}px`)
-  event.currentTarget.style.setProperty('--my', `${event.clientY - rect.top}px`)
 }

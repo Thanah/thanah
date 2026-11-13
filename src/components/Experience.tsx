@@ -3,7 +3,7 @@ import { Section } from './Section'
 
 export function Experience() {
   return (
-    <Section id="experience" index={2} eyebrow="Experience" title="Where I’ve worked">
+    <Section id="experience" eyebrow="Experience" title="Where I’ve worked">
       {/* Timeline: a fading wine line with a glowing node per employer. */}
       <ol className="relative space-y-14 before:absolute before:bottom-0 before:left-[5px] before:top-2 before:w-px before:bg-linear-to-b before:from-accent before:via-line before:to-transparent">
         {experience.map((job, i) => (

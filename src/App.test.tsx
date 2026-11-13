@@ -7,8 +7,21 @@ describe('App', () => {
   it('introduces Thanah with name, role and clearance', () => {
     render(<App />)
     expect(screen.getByRole('heading', { level: 1, name: profile.name })).toBeInTheDocument()
-    expect(screen.getAllByText(profile.role).length).toBeGreaterThan(0)
+    expect(screen.getByText(profile.tagline)).toBeInTheDocument()
     expect(screen.getByText(profile.clearance)).toBeInTheDocument()
+  })
+
+  it('captions the photos with the camera they were shot on', () => {
+    render(<App />)
+    expect(screen.getAllByText(/Canon EOS R5/).length).toBeGreaterThan(0)
+  })
+
+  it('hides "Now" entries that have not been filled in', () => {
+    const { container } = render(<App />)
+    const labels = [...container.querySelectorAll('dt')].map((dt) => dt.textContent)
+    for (const item of profile.now.items) {
+      expect(labels.includes(item.label), item.label).toBe(Boolean(item.text))
+    }
   })
 
   it('links every nav item to a section that exists', () => {

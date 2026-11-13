@@ -18,17 +18,44 @@ export const profile = {
   links: {
     linkedin: 'https://www.linkedin.com/in/thanah-raveendran',
     github: 'https://github.com/Thanah',
+    source: 'https://github.com/Thanah/thanah',
   },
-  // The hero cycles through these; the first is what search engines and screen readers get.
-  roles: ['Software Engineer', 'Test automation engineer', 'Full-stack developer', 'Delivery consultant'],
+  tagline: 'Software engineer · test automation · photographer',
   currently: 'Currently at Deloitte',
+  // TODO(thanah): read this out loud; reword anything that doesn't sound like you.
   headline:
-    'I build, test and support federal software at Deloitte, and ship full-stack products of my own on the side.',
+    'I build and test federal software at Deloitte. Off the clock I photograph people and mountains, and write the software that runs my studio.',
   about: [
     'I’m a software engineer in Deloitte’s Government & Public Services practice in Orlando, building and supporting a DHS fleet management system that covers more than 100,000 vehicles and drivers. I develop features across major releases, write the Oracle SQL behind its reports and data feeds, and trace production issues to their root cause.',
-    'Test automation is where I started. A Java-based Katalon regression suite I built cut each regression run from about three hours to thirty minutes, and JMeter load tests I designed let the team downsize its servers and halve their cost. Today I also lead technical meetings with client stakeholders and train new engineers on our automation stack.',
-    'Outside of work I run Sorne Studio, a photography business, and I built its booking and studio-management platform end to end, from the database to the payment flow.',
+    'Test automation is where I started, and it still shapes how I work: I like proving software does what it claims. A Java-based Katalon regression suite I built cut each regression run from about three hours to thirty minutes, and JMeter load tests I designed let the team downsize its servers and halve their cost. Today I also lead technical meetings with client stakeholders and train new engineers on our automation stack.',
   ],
+  offTheClock: {
+    title: 'Off the clock',
+    // TODO(thanah): add a line about why you started shooting, or what you love about it.
+    body: [
+      'I run Sorne Studio, an Orlando photography studio for portraits, brand content and real estate, after years of shooting portraits and landscapes for myself. The landscapes on this site are mine.',
+      'The studio is also where my two halves meet: I built its booking, payments and studio-management platform myself, so the same person shoots the session and fixes the bug.',
+    ],
+    links: [
+      { label: 'Portfolio at sornestudio.com', href: 'https://sornestudio.com/portfolio' },
+      { label: '@sornestudio', href: 'https://www.instagram.com/sornestudio' },
+    ],
+  },
+  // A dated snapshot of what I'm up to. Entries with an empty `text` are hidden.
+  now: {
+    updated: 'November 2026',
+    items: [
+      { label: 'Building', text: 'Blem, my life-tracker app: lately routines that repeat “every so often” and Apple Pay sync.' },
+      { label: 'Shooting', text: 'Portrait and brand sessions for Sorne Studio around Orlando.' },
+      { label: 'Learning', text: '' }, // TODO(thanah)
+      { label: 'Reading', text: '' }, // TODO(thanah)
+    ],
+  },
+  contact: {
+    // TODO(thanah): confirm the reply-time promise is one you can keep.
+    blurb:
+      'Email is the best way to reach me, whether it’s a role, a project or a question about something here. I usually reply within a day, faster if it’s about test automation, a gnarly data problem or cameras.',
+  },
 }
 
 export const stats: { value: number; suffix: string; label: string }[] = [
@@ -101,6 +128,9 @@ export const education = {
 
 export type Screenshot = { src: string; thumb: string; alt: string; caption: string }
 
+// Short write-up of the decisions behind a project, shown as an expandable section.
+export type CaseStudy = { decisions: { title: string; body: string }[] }
+
 export type Project = {
   name: string
   kind: string
@@ -111,6 +141,7 @@ export type Project = {
   imageAlt: string
   links: { label: string; href: string }[]
   gallery?: Screenshot[]
+  caseStudy?: CaseStudy
   featured?: boolean
   // Stack the image full width like the featured card, without the badge.
   wide?: boolean
@@ -154,6 +185,23 @@ export const projects: Project[] = [
       { src: blemFitness, thumb: blemFitnessThumb, alt: 'Blem fitness dashboard with workouts and a weight trend chart', caption: 'Fitness' },
       { src: blemFinance, thumb: blemFinanceThumb, alt: 'Blem finances dashboard with the monthly budget and income versus spending chart', caption: 'Finances' },
     ],
+    caseStudy: {
+      decisions: [
+        {
+          title: 'Why the database enforces sharing, not the app',
+          body: 'Everything belongs to whoever created it, and anything placed in a shared space is visible to its members. I wrote that rule once, as Postgres row-level security policies, instead of repeating it in every query. A script applies all the migrations to an in-memory Postgres and runs 32 checks that try to read and write across accounts, so a policy mistake fails before it ships.',
+        },
+        {
+          title: 'Keeping one purchase as one transaction',
+          body: 'A card swipe can show up three ways: a pending charge, the posted charge (sometimes with a tip added), and a row I typed in or imported. The daily bank sync reconciles them by updating rows it has seen, adopting matching pending or manual rows, and dropping declined charges, so the budget never double counts. Categorizing one transaction teaches a merchant rule that fixes past and future rows.',
+        },
+        {
+          title: 'A vault the server can’t read',
+          body: 'Saved logins are encrypted in the browser with a key derived from a passphrase (PBKDF2, then AES-256-GCM). The database only ever stores ciphertext, so a leaked backup or a bug in a query can’t expose a password.',
+        },
+        // TODO(thanah): add one decision that went wrong and what you changed. See task.md.
+      ],
+    },
     wide: true,
   },
   {

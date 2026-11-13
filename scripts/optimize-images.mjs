@@ -26,6 +26,24 @@ for (const [file, name] of [
     .toFile(out(`src/assets/projects/${name}.webp`))
 }
 
+// My own photographs (masters in images-src/photos, metadata stripped).
+// Full-bleed ones get three widths; the smaller About photo gets two.
+await mkdir(out('src/assets/photos'), { recursive: true })
+// Backdrops sit under a veil (see .photo-backdrop), so they take heavier compression.
+for (const [name, widths, quality] of [
+  ['alpine-lake-driftwood', [960, 1600, 2400], 55],
+  ['mt-rainier-clouds', [960, 1600, 2400], 72],
+  ['valley-mist-dusk', [960, 1600, 2400], 55],
+  ['thanah-hiking', [400, 640, 800], 66],
+]) {
+  for (const width of widths) {
+    await sharp(src(`photos/${name}.jpg`))
+      .resize({ width })
+      .webp({ quality: width > 1600 ? quality - 6 : quality })
+      .toFile(out(`src/assets/photos/${name}-${width}.webp`))
+  }
+}
+
 // Blem: a hero shot (desktop view in a browser frame with the phone view over
 // it) plus full-size gallery screens. The screenshots come from a demo account
 // seeded with made-up data, never a real one.

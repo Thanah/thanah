@@ -3,24 +3,24 @@ import headshot480 from '../assets/headshot-480.webp'
 import headshot640 from '../assets/headshot-640.webp'
 import headshot800 from '../assets/headshot-800.webp'
 import { HEADSHOT_SIZES } from '../data/headshot'
+import { photos } from '../data/photos'
 import { profile, stats } from '../data/profile'
-import { useCountUp, useRotatingIndex, useTilt } from '../hooks/motion'
+import { useCountUp, useTilt } from '../hooks/motion'
 import { GitHubIcon, LinkedInIcon, MailIcon, ShieldIcon } from './Icons'
+import { PhotoBackdrop, PhotoCaption } from './Photo'
 import { ExternalLink } from './Section'
 
 export function Hero() {
   const photoRef = useRef<HTMLDivElement>(null)
   useTilt(photoRef)
-  const roleIndex = useRotatingIndex(profile.roles.length)
-  const role = profile.roles[roleIndex]
 
   return (
     <section id="top" className="relative isolate overflow-x-clip">
-      <div className="aurora" aria-hidden="true">
+      <PhotoBackdrop photo={photos.hero} priority />
+      <div className="aurora opacity-70" aria-hidden="true">
         <span />
         <span />
       </div>
-      <div className="dot-grid" aria-hidden="true" />
 
       <div className="mx-auto grid max-w-5xl items-center gap-14 px-4 pb-16 pt-14 sm:px-6 sm:pt-24 md:grid-cols-[1fr_auto]">
         <div data-reveal>
@@ -35,18 +35,13 @@ export function Hero() {
             </span>
           </p>
 
-          <h1 className="text-gradient mt-7 pb-1 font-display text-5xl font-medium leading-[1.02] tracking-tight sm:text-7xl">
+          <h1 className="mt-7 pb-1 font-display text-5xl font-medium leading-[1.02] tracking-tight sm:text-7xl">
             {profile.name}
           </h1>
 
-          <p className="mt-4 h-9 text-xl sm:text-2xl">
-            <span className="sr-only">{profile.roles[0]}</span>
-            <span aria-hidden="true" className="inline-flex items-center gap-3">
-              <span className="h-px w-8 bg-accent" />
-              <span key={role} className="role-in inline-block text-accent">
-                {role}
-              </span>
-            </span>
+          <p className="mt-4 flex items-start gap-3 text-lg text-accent sm:text-xl">
+            <span className="mt-[0.8em] h-px w-8 shrink-0 bg-accent" aria-hidden="true" />
+            <span>{profile.tagline}</span>
           </p>
 
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">{profile.headline}</p>
@@ -90,10 +85,7 @@ export function Hero() {
             />
           </div>
           <p className="absolute -bottom-4 -left-4 inline-flex items-center gap-2 rounded-full border border-line bg-surface/80 px-3.5 py-1.5 text-sm shadow-lg backdrop-blur sm:-left-8">
-            <span className="relative flex size-2">
-              <span className="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-60 motion-reduce:animate-none" />
-              <span className="relative inline-flex size-2 rounded-full bg-accent" />
-            </span>
+            <span className="inline-flex size-2 rounded-full bg-accent" aria-hidden="true" />
             {profile.currently}
           </p>
         </div>
@@ -107,6 +99,7 @@ export function Hero() {
 function StatsBand() {
   return (
     <div className="mx-auto max-w-5xl px-4 pb-20 sm:px-6 md:pb-28">
+      <PhotoCaption photo={photos.hero} label="Background photo" className="mb-3 text-muted sm:text-right" />
       <dl
         data-reveal
         className="grid grid-cols-2 overflow-hidden rounded-2xl border border-line bg-surface/50 backdrop-blur md:grid-cols-4"

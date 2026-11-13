@@ -1,12 +1,11 @@
-import { projects, type Project } from '../data/profile'
-import { trackPointer } from '../hooks/motion'
+import { projects, type CaseStudy, type Project } from '../data/profile'
 import { Gallery } from './Gallery'
 import { ArrowUpRightIcon } from './Icons'
 import { ExternalLink, Section } from './Section'
 
 export function Projects() {
   return (
-    <Section id="projects" index={3} eyebrow="Projects" title="Things I’ve built">
+    <Section id="projects" eyebrow="Projects" title="Things I’ve built">
       <div className="space-y-10">
         {projects.map((project) => (
           <ProjectCard key={project.name} project={project} />
@@ -23,8 +22,7 @@ function ProjectCard({ project }: { project: Project }) {
   return (
     <article
       data-reveal
-      onPointerMove={trackPointer}
-      className={`spotlight group grid overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_30px_80px_-30px_rgb(var(--glow)/0.6)] ${
+      className={`group grid overflow-hidden rounded-2xl border border-line bg-surface transition duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_30px_80px_-30px_rgb(var(--glow)/0.6)] ${
         stacked ? '' : 'md:grid-cols-[1fr_1.1fr]'
       }`}
     >
@@ -88,6 +86,30 @@ function ProjectCard({ project }: { project: Project }) {
           </ul>
         </div>
       </div>
+      {project.caseStudy && <CaseStudyDetails study={project.caseStudy} />}
     </article>
+  )
+}
+
+// The decisions behind a project, collapsed by default so the card stays scannable.
+function CaseStudyDetails({ study }: { study: CaseStudy }) {
+  return (
+    <details className="group/cs border-t border-line md:col-span-full">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 font-mono text-xs uppercase tracking-widest text-accent transition hover:text-ink sm:px-8 [&::-webkit-details-marker]:hidden">
+        How it’s built: {study.decisions.length} decisions
+        <span aria-hidden="true" className="text-lg leading-none transition group-open/cs:rotate-45">
+          +
+        </span>
+      </summary>
+      <ol className="grid gap-8 px-6 pb-8 sm:px-8 md:grid-cols-[repeat(auto-fit,minmax(15rem,1fr))]">
+        {study.decisions.map((decision, i) => (
+          <li key={decision.title}>
+            <p className="font-mono text-xs text-muted">{String(i + 1).padStart(2, '0')}</p>
+            <h4 className="mt-2 font-display text-xl font-medium">{decision.title}</h4>
+            <p className="mt-2 text-sm leading-relaxed text-muted">{decision.body}</p>
+          </li>
+        ))}
+      </ol>
+    </details>
   )
 }
