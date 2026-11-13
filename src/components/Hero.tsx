@@ -1,6 +1,8 @@
 import { useRef, type CSSProperties } from 'react'
-import headshot400 from '../assets/headshot-400.webp'
+import headshot480 from '../assets/headshot-480.webp'
+import headshot640 from '../assets/headshot-640.webp'
 import headshot800 from '../assets/headshot-800.webp'
+import { HEADSHOT_SIZES } from '../data/headshot'
 import { profile, stats } from '../data/profile'
 import { useCountUp, useRotatingIndex, useTilt } from '../hooks/motion'
 import { GitHubIcon, LinkedInIcon, MailIcon, ShieldIcon } from './Icons'
@@ -78,8 +80,8 @@ export function Hero() {
           <div ref={photoRef} className="tilt glow-frame w-64 sm:w-72 md:w-80">
             <img
               src={headshot800}
-              srcSet={`${headshot400} 400w, ${headshot800} 800w`}
-              sizes="(min-width: 768px) 320px, 70vw"
+              srcSet={`${headshot480} 480w, ${headshot640} 640w, ${headshot800} 800w`}
+              sizes={HEADSHOT_SIZES}
               width={800}
               height={1000}
               alt={`Portrait of ${profile.name}`}

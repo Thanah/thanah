@@ -8,7 +8,8 @@ const out = (path) => new URL(`../${path}`, import.meta.url).pathname.replace(/^
 
 await mkdir(out('src/assets/projects'), { recursive: true })
 
-for (const width of [400, 800]) {
+// The hero shows the headshot at 256/288/320 CSS px; these cover 1.5x to 2.5x.
+for (const width of [480, 640, 800]) {
   await sharp(src('headshot.jpg'))
     .resize({ width })
     .webp({ quality: 82 })
