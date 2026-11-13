@@ -20,7 +20,7 @@ export const profile = {
     github: 'https://github.com/Thanah',
     source: 'https://github.com/Thanah/thanah',
   },
-  tagline: 'Software engineer · test automation · photographer',
+  tagline: 'Software Engineer · Test Automation · Photographer',
   currently: 'Currently at Deloitte',
   // TODO(thanah): read this out loud; reword anything that doesn't sound like you.
   headline:
